@@ -1,0 +1,33 @@
+{
+    "cpu_info": {
+        "Global CPU Usage": "9.56",
+        "CPU Usage per Core": {
+            "1": "10.10",
+            "2": "14.00",
+            "3": "9.20",
+            "4": "4.00",
+            "5": "13.10",
+            "6": "7.10",
+            "7": "9.00",
+            "8": "10.00"
+        }
+    },
+    "mem_info": {
+        "Total Memory": "16.0",
+        "Available Memory": "13.0",
+        "Memory Usage Percentage": "16.1"
+    },
+    "disk_info": {
+        "Total Disk Space": "103.0",
+        "Total Free Space": "81.0",
+        "Total Space Used": "16.0",
+        "Disk Usage Percent": "16.7"
+    },
+    "net_info": {
+        "Download Speed": "VERY FAST",
+        "Upload Speed": "VERY FAST"
+    },
+    "temp_info": {
+        "Global Temperature": "47.0 C"
+    }
+}
