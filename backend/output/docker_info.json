@@ -1,0 +1,52 @@
+{
+    "/homarr": {
+        "short_id": "a23991836c79",
+        "state": "running",
+        "image": "ghcr.io/ajnart/homarr:latest"
+    },
+    "/bazarr": {
+        "short_id": "a3659fd8ca75",
+        "state": "running",
+        "image": "hotio/bazarr:latest"
+    },
+    "/jellyseerr": {
+        "short_id": "5d2a6036f509",
+        "state": "running",
+        "image": "fallenbagel/jellyseerr:latest"
+    },
+    "/jellyfin": {
+        "short_id": "dc4e8753ebc6",
+        "state": "running",
+        "image": "lscr.io/linuxserver/jellyfin:latest"
+    },
+    "/plex": {
+        "short_id": "65e7eb28eb2d",
+        "state": "running",
+        "image": "lscr.io/linuxserver/plex:latest"
+    },
+    "/qbittorrent": {
+        "short_id": "91aa3501bc80",
+        "state": "running",
+        "image": "lscr.io/linuxserver/qbittorrent:latest"
+    },
+    "/radarr": {
+        "short_id": "41d15abf4b60",
+        "state": "running",
+        "image": "lscr.io/linuxserver/radarr:latest"
+    },
+    "/sonarr": {
+        "short_id": "3b6999bbbeaa",
+        "state": "running",
+        "image": "lscr.io/linuxserver/sonarr:latest"
+    },
+    "/prowlarr": {
+        "short_id": "fc7d5b851d28",
+        "state": "running",
+        "image": "lscr.io/linuxserver/prowlarr:latest"
+    },
+    "/upbeat_rubin": {
+        "short_id": "efeb0c5ee71d",
+        "state": "running",
+        "image": "mauricenino/dashdot:latest"
+    }
+}

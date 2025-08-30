@@ -23,7 +23,7 @@ class Docker_Info:
         self.client = docker.from_env(
             # base_url=base_url_input, use_ssh_client=use_ssh_client_input
         )
-        self.containers = client.containers.list()
+        self.containers = self.client.containers.list()
         self.docker_container_json = {}
         self.docker_container_json.clear()
         self._set_all_docker_info()
@@ -33,7 +33,7 @@ class Docker_Info:
             self.docker_container_json[container.attrs["Name"]] = {
                 "short_id": container.short_id,
                 "state": container.attrs["State"]["Status"],
-                "image": container.image,
+                "image": container.image.tags[0],
             }
         except docker.errors.NotFound as e:
             print(f"Problem accessing container. Error: {e}")
@@ -47,12 +47,13 @@ class Docker_Info:
         with open(output_file, "w") as f:
             json.dump(self.docker_container_json, f, indent=4)
 
+        print(f"Docker info file found at: {output_file}")
 
 if __name__ == "__main__":
 
     # base_url = input("Server to ssh: ")
 
     container_info = Docker_Info()
-    os.makedirs(OUTPUT_DIR)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
     output_file = os.path.join(OUTPUT_DIR, FILENAME)
-    container_info.get_docker_info_json()
+    container_info.get_docker_info_json(output_file)
