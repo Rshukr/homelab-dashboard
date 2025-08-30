@@ -95,4 +95,5 @@ if __name__ == "__main__":
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     test_output_file = os.path.join(OUTPUT_DIR, FILENAME)
     test_metrics.get_metrics(test_output_file)
+    print(f"Test metric json found at: {test_output_file}")
 

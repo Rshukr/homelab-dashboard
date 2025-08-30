@@ -1,0 +1,58 @@
+import json
+import os
+
+import docker
+
+"""
+
+1. list all container ids
+2. container = client.container.get(id*)
+3. container.stats() # stream = True -> Generator | False -> Dict
+4. container.attr # for Id, Name, State, Image
+
+"""
+
+# TEST
+FILENAME = "docker_info.json"
+OUTPUT_DIR = os.path.join("backend", "output")
+
+
+class Docker_Info:
+
+    def __init__(self):  # base_url_input, use_ssh_client_input: bool):
+        self.client = docker.from_env(
+            # base_url=base_url_input, use_ssh_client=use_ssh_client_input
+        )
+        self.containers = client.containers.list()
+        self.docker_container_json = {}
+        self.docker_container_json.clear()
+        self._set_all_docker_info()
+
+    def _populate_docker_json(self, container):
+        try:
+            self.docker_container_json[container.attrs["Name"]] = {
+                "short_id": container.short_id,
+                "state": container.attrs["State"]["Status"],
+                "image": container.image,
+            }
+        except docker.errors.NotFound as e:
+            print(f"Problem accessing container. Error: {e}")
+
+    def _set_all_docker_info(self):
+        for container in self.containers:
+            self._populate_docker_json(container)
+
+    def get_docker_info_json(self, output_file):
+
+        with open(output_file, "w") as f:
+            json.dump(self.docker_container_json, f, indent=4)
+
+
+if __name__ == "__main__":
+
+    # base_url = input("Server to ssh: ")
+
+    container_info = Docker_Info()
+    os.makedirs(OUTPUT_DIR)
+    output_file = os.path.join(OUTPUT_DIR, FILENAME)
+    container_info.get_docker_info_json()
