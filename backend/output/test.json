@@ -1,33 +1,33 @@
 {
     "cpu_info": {
-        "Global CPU Usage": "1.02",
-        "CPU Usage per Core": {
-            "1": "5.20",
-            "2": "2.00",
-            "3": "0.00",
-            "4": "0.00",
-            "5": "0.00",
-            "6": "0.00",
-            "7": "1.00",
-            "8": "0.00"
+        "global_cpu_usage": "10.82",
+        "cpu_usage_per_core": {
+            "1": "14.40",
+            "2": "10.00",
+            "3": "7.10",
+            "4": "13.00",
+            "5": "11.10",
+            "6": "13.00",
+            "7": "6.00",
+            "8": "12.00"
         }
     },
     "mem_info": {
-        "Total Memory": "16.0",
-        "Available Memory": "12.0",
-        "Memory Usage Percentage": "23.1"
+        "total_memory": "16.0",
+        "available_memory": "11.0",
+        "memory_usage_percentage": "28.4"
     },
     "disk_info": {
-        "Total Disk Space": "103.0",
-        "Total Free Space": "81.0",
-        "Total Space Used": "16.0",
-        "Disk Usage Percent": "16.7"
+        "total_disk_space": "103.0",
+        "total_free_space": "81.0",
+        "total_space_used": "16.0",
+        "disk_usage_percent": "16.7"
     },
     "net_info": {
-        "Download Speed": "VERY FAST",
-        "Upload Speed": "VERY FAST"
+        "download_speed": "VERY FAST",
+        "upload_speed": "VERY FAST"
     },
     "temp_info": {
-        "Global Temperature": "52.0 C"
+        "global_temperature": "47.0 C"
     }
 }

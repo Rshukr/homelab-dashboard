@@ -9,6 +9,7 @@ description = "Best homelab dashboard"
 authors = [
     { name="Ramz", email="ramz@fulcrum.com"}
 ]
-readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
+[tool.setuptools.packages.find]
+include = ["app", "collectors", "models", "routes"]
