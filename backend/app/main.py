@@ -1,0 +1,15 @@
+##########################################################
+#### To launch : uvicorn backend.app.main:app --reload ###
+##########################################################
+
+from routes.api import router
+
+from fastapi import FastAPI
+
+app = FastAPI()
+app.include_router(router=router)
+
+
+@app.get("/")
+async def root():
+    return {"Main": "Welcome to my Homelab Dashboard"}

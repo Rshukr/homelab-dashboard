@@ -19,6 +19,8 @@ OUTPUT_DIR = os.path.join("backend", "output")
 
 class Docker_Info:
 
+    # TODO: Make this work for any system
+
     def __init__(self):  # base_url_input, use_ssh_client_input: bool):
         self.client = docker.from_env(
             # base_url=base_url_input, use_ssh_client=use_ssh_client_input
@@ -48,6 +50,7 @@ class Docker_Info:
             json.dump(self.docker_container_json, f, indent=4)
 
         print(f"Docker info file found at: {output_file}")
+
 
 if __name__ == "__main__":
 

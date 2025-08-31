@@ -74,7 +74,7 @@ class Metrics:
         }
 
     def _collect_net_rates(self) -> Dict[str, str]:
-        # download, upload
+        # TODO: download, upload
         return {"Download Speed": "VERY FAST", "Upload Speed": "VERY FAST"}
 
     def _collect_temp(self) -> Dict[str, str]:
@@ -96,4 +96,3 @@ if __name__ == "__main__":
     test_output_file = os.path.join(OUTPUT_DIR, FILENAME)
     test_metrics.get_metrics(test_output_file)
     print(f"Test metric json found at: {test_output_file}")
-
