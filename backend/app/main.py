@@ -1,5 +1,6 @@
 ##########################################################
-#### To launch : uvicorn backend.app.main:app --reload ###
+#### To launch: uvicorn backend.app.main:app --reload ####
+#### To launch on LAN add: --host 0.0.0.0 --port 8000 ####
 ##########################################################
 
 from routes.api import router
