@@ -3,3 +3,5 @@ uvicorn
 psutil
 docker
 requests
+
+-e backend/app
