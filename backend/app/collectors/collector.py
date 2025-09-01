@@ -1,6 +1,7 @@
 from typing import List, Dict, Union
 import json
 import os
+import itertools
 
 import psutil
 
@@ -79,10 +80,13 @@ class Metrics:
 
     def _collect_temp(self) -> Dict[str, str]:
         # global temp (acpitz)
-
-        temp_info = str(psutil.sensors_temperatures()["acpitz"][0].current)
-
-        return {"global_temperature": f"{temp_info} C"}
+        try:
+            all_shwtemp = list(itertools.chain.from_iterable(psutil.sensors_temperatures().values()))
+            all_temp = [cur_temp.current for cur_temp in all_shwtemp]
+            avg_temp = sum(all_temp)/len(all_temp)
+            return {"global_temperature": f"{avg_temp} C"}
+        except:
+            return {"global_temperature": "No temperature Found"}
 
     def get_metrics(self, output_file) -> Dict[str, Union[Dict, str]]:
 
