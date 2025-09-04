@@ -1,6 +1,7 @@
 import json
 import os
 from collections import defaultdict
+import time
 
 import docker
 
@@ -22,23 +23,31 @@ ERROR_NAME = "error"
 
 class Docker_Info:
     def __init__(self):  # base_url_input, use_ssh_client_input: bool):
-        self.docker_container_json = defaultdict(dict)
+        self.docker_container_data = defaultdict(dict)
         try:
             self.client = docker.from_env(
                 # base_url=base_url_input, use_ssh_client=use_ssh_client_input
             )
             self.containers = self.client.containers.list()
-            self.docker_container_json.clear()
+            self.docker_container_data.clear()
             self._set_all_docker_info()
-            self.docker_container_json = dict(self.docker_container_json)
+            self.docker_container_data = dict(self.docker_container_data)
+            
+            self.payload = {
+                "type": "container",
+                "ts": str(int(time.time())),
+                "data": self.docker_container_data
+            }
+            
+            
         except docker.errors.DockerException as e:
-            self.docker_container_json[ERROR_NAME] = (
+            self.docker_container_data[ERROR_NAME] = (
                 f"Docker might not be installed on the server. Check out the docker error message: {e}"
             )
 
     def _populate_docker_json(self, container):
         try:
-            self.docker_container_json[CONTAINER_LIST_NAME][container.attrs["Name"]] = {
+            self.docker_container_data[CONTAINER_LIST_NAME][container.attrs["Name"]] = {
                 "short_id": container.short_id,
                 "state": container.attrs["State"]["Status"],
                 "image": container.image.tags[0],
@@ -51,12 +60,12 @@ class Docker_Info:
             self._populate_docker_json(container)
 
     def get_docker_info(self):
-        return self.docker_container_json
+        return self.payload
 
     def write_docker_info_json(self, output_file):
 
         with open(output_file, "w") as f:
-            json.dump(self.docker_container_json, f, indent=4)
+            json.dump(self.docker_container_data, f, indent=4)
 
         print(f"Docker info file found at: {output_file}")
 

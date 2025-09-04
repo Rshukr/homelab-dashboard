@@ -1,37 +1,46 @@
-from typing import List, Dict, Union
+from typing import Dict, Union
 import json
 import os
 import itertools
+import time
 
 import psutil
 
 TO_GB = 1e9
 TO_MB = 1e6
-
+METRICS_INTERVAL = 1
 FILENAME = "test.json"
 OUTPUT_DIR = os.path.join("backend", "output")
 
 
 class Metrics:
-    def __init__(self):
+    def __init__(self, metrics_interval):
+        self.metrics_interval = metrics_interval
+        
         cpu_info = self._collect_cpu()
         mem_info = self._collect_mem()
         disk_info = self._collect_storage()
         net_info = self._collect_net_rates()
         temp_info = self._collect_temp()
 
-        self.metrics_dict = {
+        self.metrics_data_dict = {
             "cpu_info": cpu_info,
             "mem_info": mem_info,
             "disk_info": disk_info,
             "net_info": net_info,
             "temp_info": temp_info,
         }
+        
+        self.payload = {
+            "type": "metrics",
+            "ts": str(int(time.time())),
+            "data": self.metrics_data_dict
+        }
 
     def _collect_cpu(self) -> Dict[str, Union[str, Dict[str, str]]]:
         # cpu usage, cpu usage per core
 
-        cpu_usage_per_core = psutil.cpu_percent(interval=1, percpu=True)
+        cpu_usage_per_core = psutil.cpu_percent(interval=self.metrics_interval, percpu=True)
         cpu_usage_avg = sum(cpu_usage_per_core) / len(cpu_usage_per_core)
 
         return {
@@ -88,15 +97,19 @@ class Metrics:
         except:
             return {"global_temperature": "No temperature Found"}
 
-    def get_metrics(self, output_file) -> Dict[str, Union[Dict, str]]:
+    def get_metrics(self) -> Dict[str, Union[Dict, str]]:
+        return self.payload
+
+    def write_metrics(self, output_file):
 
         with open(output_file, "w") as f:
-            json.dump(self.metrics_dict, f, indent=4)
+            json.dump(self.payload, f, indent=4)
 
 
 if __name__ == "__main__":
-    test_metrics = Metrics()
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    test_output_file = os.path.join(OUTPUT_DIR, FILENAME)
-    test_metrics.get_metrics(test_output_file)
-    print(f"Test metric json found at: {test_output_file}")
+    test_metrics = Metrics(METRICS_INTERVAL)
+    # os.makedirs(OUTPUT_DIR, exist_ok=True)
+    # test_output_file = os.path.join(OUTPUT_DIR, FILENAME)
+    print(test_metrics.get_metrics())
+    # test_metrics.write_metrics(test_output_file)
+    # print(f"Test metric json found at: {test_output_file}")

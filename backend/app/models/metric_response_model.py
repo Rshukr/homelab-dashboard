@@ -35,3 +35,8 @@ class ServerMetricsResponse(BaseModel):
     disk_info: DiskMetric
     net_info: NetMetric
     temp_info: TempMetric
+
+class MetricPayload(BaseModel):
+    type: str
+    ts: str
+    data: ServerMetricsResponse

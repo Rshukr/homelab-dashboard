@@ -12,3 +12,8 @@ class SingleContainer(BaseModel):
 class ContainerResponse(BaseModel):
     containers: Dict[str, SingleContainer] | None = None
     error: Optional[str] = None
+
+class ContainerPayload(BaseModel):
+    type: str
+    ts: str
+    data: ContainerResponse

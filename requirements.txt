@@ -3,5 +3,6 @@ uvicorn
 psutil
 docker
 requests
+websockets
 
 -e backend/app
