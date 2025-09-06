@@ -1,7 +1,7 @@
 from collectors import collector
 from collectors import docker_health
 from models.container_response_model import ContainerPayload
-from models.metric_response_model import MetricPayload
+from models.metric_response_model import MetricPayload, ServerMetricsResponse
 
 from fastapi import APIRouter
 
@@ -11,11 +11,17 @@ router = APIRouter(prefix="/api")
 
 
 @router.get("/server_metrics", response_model=MetricPayload)
-async def get_metrics():
+async def get_metrics() -> MetricPayload:
     metric_obj = collector.Metrics(METRICS_INTERVAL)
-    all_server_metrics_dict = metric_obj.get_metrics()
-    print(all_server_metrics_dict)
-    return MetricPayload(**all_server_metrics_dict)
+    payload_dict = await metric_obj.get_metrics()
+
+    # Convert nested 'data' dict into the expected Pydantic model
+    server_metrics = ServerMetricsResponse(**payload_dict["data"])  # type: ignore[arg-type]
+    return MetricPayload(
+        type=payload_dict["type"],
+        ts=payload_dict["ts"],
+        data=server_metrics,
+    )
 
 
 @router.get("/container_status", response_model=ContainerPayload)

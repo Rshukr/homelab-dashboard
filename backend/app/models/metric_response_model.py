@@ -1,10 +1,11 @@
 from fastapi import Body
 from pydantic import BaseModel
+from typing import Dict
 
 
 class CpuMetric(BaseModel):
     global_cpu_usage: str
-    cpu_usage_per_core: dict[str, str]
+    cpu_usage_per_core: Dict[str, str]
 
 
 class MemMetric(BaseModel):

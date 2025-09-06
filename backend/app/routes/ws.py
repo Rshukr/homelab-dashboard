@@ -1,19 +1,18 @@
 from collectors.collector import Metrics
 
-from fastapi import WebSocket, WebSocketException, APIRouter
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-METRICS_INTERVAL = 1
+ws_router = APIRouter()
 
-
-ws_router = APIRouter(prefix="/ws")
-
-@ws_router.websocket("/server_metrics")
+@ws_router.websocket("/ws")
 async def ws_endpoint(websocket: WebSocket):
     await websocket.accept()
-    try:
-        while True:
-            metric_obj = Metrics(METRICS_INTERVAL)
-            metric_data = metric_obj.get_metrics()
-            await websocket.send_json(metric_data)
-    except:
-        return {"msg": "ERROR"}
+    Done = False
+    while not Done:
+        # TODO: Add timer input
+        metric_obj = Metrics(1)
+        metric_data = await metric_obj.get_metrics()
+        await websocket.send_json(metric_data)
+        await websocket.close()
+        Done = True
+    # except WebSocketDisconnect:

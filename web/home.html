@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Metrics</title>
-    </head>
-    <body>
-        <h1>WebSocket Metrics</h1>
-        <form action="" onsubmit="sendMessage(event)">
-            <input type="text" id="messageText" autocomplete="off"/>
-            <button>Send</button>
-        </form>
-        <ul id='metrics'>
-        </ul>
-        <script>
-            var ws = new WebSocket("ws://localhost:8000/ws");
-            ws.onmessage = function(event) {
-                var messages = document.getElementById('messages')
-                var message = document.createElement('li')
-                var content = document.createTextNode(event.data)
-                message.appendChild(content)
-                messages.appendChild(message)
-            };
-            function sendMessage(event) {
-                var input = document.getElementById("messageText")
-                ws.send(input.value)
-                input.value = ''
-                event.preventDefault()
-            }
-        </script>
-    </body>
+
+<head>
+    <title>Metrics</title>
+</head>
+
+<body>
+    <h1>WebSocket Metrics</h1>
+    <p>START</p>
+    <ul id="cpu-usage"></ul>
+    <p id="end"></p>
+    <script>
+        var ws = new WebSocket("ws://localhost:8000/ws");
+        ws.onmessage = function (event) {
+            var metrics_list = document.getElementById('cpu-usage')
+            var new_metric = document.createElement('li')
+
+            const parser = JSON.parse(event.data)
+            var cpu_usage = parser.data.cpu_info.global_cpu_usage
+
+            var content = document.createTextNode(cpu_usage) //string
+            new_metric.appendChild(content)
+            metrics_list.appendChild(new_metric)
+        };
+        ws.onclose = function (event) {
+            var message = "WEBSOCKET CLOSED"
+            var ending_message_p = document.getElementById('end')
+            // var ending_message = document.createElement('li')
+            // ending_message.append(message)
+            ending_message_p.append(message)
+        }
+    </script>
+</body>
+
 </html>

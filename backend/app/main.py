@@ -3,38 +3,22 @@
 #### To launch on LAN add: --host 0.0.0.0 --port 8000 ####
 ##########################################################
 
+import os
+
 from routes.api import router
 from routes.ws import ws_router
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse 
 
 app = FastAPI()
 app.include_router(router=router)
-# app.include_router(router=ws_router)
+app.include_router(router=ws_router)
 
+home_page_path = os.path.join("web", "home.html")
+with open(home_page_path, "r") as f:
+    home_page = f.read()
 
 @app.get("/")
 async def root():
-    return {"Main": "Welcome to my Homelab Dashboard"}
-
-from collectors.collector import Metrics
-
-from fastapi import WebSocket, WebSocketException, APIRouter
-
-METRICS_INTERVAL = 1
-
-
-# ws_router = APIRouter(prefix="/ws")
-
-# @app.websocket("/ws")
-# async def websocket_endpoint(websocket: WebSocket):
-#     print("HELLO")
-#     await websocket.accept()
-#     # try:
-#     #     while True:
-#     #         metric_obj = Metrics(METRICS_INTERVAL)
-#     #         metric_data = metric_obj.get_metrics()
-#     #         await websocket.send_json(metric_data)
-#     # except:
-#         # return {"msg": "ERROR"}
-#     return {"msg": "ERROR"}
+    return HTMLResponse(home_page)

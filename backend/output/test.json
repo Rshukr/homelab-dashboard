@@ -1,33 +1,33 @@
 {
-    "cpu_info": {
-        "global_cpu_usage": "10.82",
-        "cpu_usage_per_core": {
-            "1": "14.40",
-            "2": "10.00",
-            "3": "7.10",
-            "4": "13.00",
-            "5": "11.10",
-            "6": "13.00",
-            "7": "6.00",
-            "8": "12.00"
+    "type": "metrics",
+    "ts": "1757183236",
+    "data": {
+        "cpu_info": {
+            "global_cpu_usage": "4.30",
+            "cpu_usage_per_core": {
+                "1": "6.10",
+                "2": "3.10",
+                "3": "2.00",
+                "4": "6.00"
+            }
+        },
+        "mem_info": {
+            "total_memory": "8.0",
+            "available_memory": "2.0",
+            "memory_usage_percentage": "66.6"
+        },
+        "disk_info": {
+            "total_disk_space": "844 GB",
+            "total_free_space": "133 GB",
+            "total_space_used": "676 GB",
+            "disk_usage_percent": "83 %"
+        },
+        "net_info": {
+            "download_speed": "VERY FAST",
+            "upload_speed": "VERY FAST"
+        },
+        "temp_info": {
+            "global_temperature": "48.75 C"
         }
-    },
-    "mem_info": {
-        "total_memory": "16.0",
-        "available_memory": "11.0",
-        "memory_usage_percentage": "28.4"
-    },
-    "disk_info": {
-        "total_disk_space": "103.0",
-        "total_free_space": "81.0",
-        "total_space_used": "16.0",
-        "disk_usage_percent": "16.7"
-    },
-    "net_info": {
-        "download_speed": "VERY FAST",
-        "upload_speed": "VERY FAST"
-    },
-    "temp_info": {
-        "global_temperature": "47.0 C"
     }
 }
