@@ -10,6 +10,7 @@
     <p>START</p>
     <ul id="cpu-usage"></ul>
     <p id="end"></p>
+    <button id="end_ws_connection" onclick="ws.close()">End Connection</button>
     <script>
         var ws = new WebSocket("ws://localhost:8000/ws");
         ws.onmessage = function (event) {
