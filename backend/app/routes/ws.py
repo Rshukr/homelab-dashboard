@@ -3,8 +3,8 @@ import asyncio
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
 ws_router = APIRouter()
-INTERVAL = 1
-async def get_metric_task(websocket: WebSocket, timer: int):
+INTERVAL = 0.5
+async def get_metric_task(websocket: WebSocket, timer: float):
     try:
         while True:
             metric_obj = Metrics(1)
@@ -27,10 +27,12 @@ async def ws_endpoint(websocket: WebSocket):
         while True:
             try:
                 await asyncio.wait_for(websocket.receive(), timeout=0.5)
-            except (asyncio.TimeoutError, RuntimeError):
-                raise
-    except WebSocketDisconnect as e:
-        print(f"WEBSOCKET CONNECTION CLOSED, CODE: {e.code}")
+            except asyncio.TimeoutError as e:
+                continue
+            except (WebSocketDisconnect, RuntimeError):
+                break
+    except (WebSocketDisconnect, RuntimeError) as e:
+        print(f"WEBSOCKET CONNECTION CLOSED, CODE: {e}")
     finally:
         metric_task.cancel()
         try:
