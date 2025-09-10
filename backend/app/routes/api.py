@@ -1,3 +1,5 @@
+from routes.ws import ws_router
+
 from collectors import collector
 from collectors import docker_health
 from models.container_response_model import ContainerPayload
@@ -7,10 +9,10 @@ from fastapi import APIRouter
 
 METRICS_INTERVAL = 1
 
-router = APIRouter(prefix="/api")
+api_router = APIRouter(prefix="/api")
+api_router.include_router(router=ws_router)
 
-
-@router.get("/server_metrics", response_model=MetricPayload)
+@api_router.get("/server_metrics", response_model=MetricPayload)
 async def get_metrics() -> MetricPayload:
     metric_obj = collector.Metrics(METRICS_INTERVAL)
     payload_dict = await metric_obj.get_metrics()
@@ -24,7 +26,7 @@ async def get_metrics() -> MetricPayload:
     )
 
 
-@router.get("/container_status", response_model=ContainerPayload)
+@api_router.get("/container_status", response_model=ContainerPayload)
 async def get_container_info():
     docker_stats_obj = docker_health.Docker_Info()
     all_container_info_dict = docker_stats_obj.get_docker_info()

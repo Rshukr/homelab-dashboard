@@ -2,7 +2,7 @@ from collectors.collector import Metrics
 import asyncio
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-ws_router = APIRouter()
+ws_router = APIRouter(prefix="")
 INTERVAL = 0.5
 async def get_metric_task(websocket: WebSocket, timer: float):
     try:
@@ -19,7 +19,7 @@ async def get_metric_task(websocket: WebSocket, timer: float):
         raise
         
 
-@ws_router.websocket("/ws")
+@ws_router.websocket("/server_metrics/ws")
 async def ws_endpoint(websocket: WebSocket):
     await websocket.accept()
     metric_task = asyncio.create_task(get_metric_task(websocket, INTERVAL))
