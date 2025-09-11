@@ -29,5 +29,5 @@ async def get_metrics() -> MetricPayload:
 @api_router.get("/container_status", response_model=ContainerPayload)
 async def get_container_info():
     docker_stats_obj = docker_health.Docker_Info()
-    all_container_info_dict = docker_stats_obj.get_docker_info()
+    all_container_info_dict = await docker_stats_obj.get_docker_info()
     return ContainerPayload(**all_container_info_dict)

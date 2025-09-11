@@ -4,6 +4,7 @@ from collections import defaultdict
 import time
 
 import docker
+from docker.errors import DockerException, NotFound
 
 """
 
@@ -40,7 +41,7 @@ class Docker_Info:
             }
             
             
-        except docker.errors.DockerException as e:
+        except DockerException as e:
             self.docker_container_data[ERROR_NAME] = (
                 f"Docker might not be installed on the server. Check out the docker error message: {e}"
             )
@@ -52,14 +53,14 @@ class Docker_Info:
                 "state": container.attrs["State"]["Status"],
                 "image": container.image.tags[0],
             }
-        except docker.errors.NotFound as e:
+        except NotFound as e:
             print(f"Problem accessing container. Error: {e}")
 
     def _set_all_docker_info(self):
         for container in self.containers:
             self._populate_docker_json(container)
 
-    def get_docker_info(self):
+    async def get_docker_info(self):
         return self.payload
 
     def write_docker_info_json(self, output_file):

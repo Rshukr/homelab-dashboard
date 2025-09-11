@@ -6,23 +6,23 @@
 </head>
 
 <body>
-    <h1>WebSocket Metrics</h1>
+    <h1>WebSocket Container Status</h1>
     <p>START</p>
     <button id="end_ws_connection" onclick="ws.close()">End Connection</button>
-    <ul id="cpu-usage"></ul>
+    <ul id="container-data"></ul>
     <p id="end"></p>
     <script>
-        var ws = new WebSocket("ws://localhost:8000/ws");
+        var ws = new WebSocket("ws://localhost:8000/container_status/ws");
         ws.onmessage = function (event) {
-            var metrics_list = document.getElementById('cpu-usage')
-            var new_metric = document.createElement('li')
+            var container_list = document.getElementById('container-data')
+            var new_container = document.createElement('li')
 
             const parser = JSON.parse(event.data)
-            var cpu_usage = parser.data.cpu_info.global_cpu_usage
+            var container_data = parser.data.containers
 
-            var content = document.createTextNode(cpu_usage) //string
-            new_metric.appendChild(content)
-            metrics_list.appendChild(new_metric)
+            var content = document.createTextNode(container_data) //string
+            new_container.appendChild(content)
+            container_list.appendChild(new_container)
         };
         ws.onclose = function (event) {
             var message = "WEBSOCKET CLOSED"
