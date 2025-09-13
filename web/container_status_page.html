@@ -17,8 +17,8 @@
             var container_list = document.getElementById('container-data')
             var new_container = document.createElement('li')
 
-            const parser = JSON.parse(event.data)
-            var container_data = parser.data.containers
+            const container_data = JSON.stringify(event.data)
+            <!-- var container_data = parser.data.containers -->
 
             var content = document.createTextNode(container_data) //string
             new_container.appendChild(content)
